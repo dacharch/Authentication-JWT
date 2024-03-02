@@ -1,14 +1,27 @@
-const express = require('express')  ;
-const mongoose = require('mongoose') ;
+const express = require('express')
+const mongo = require('mongoose') 
+const cors = require("cors")
+
+
+const app = express()
+const port = 3003
+
+app.use(express.json())
+app.use(cors())
 
 
 
-const app = express() ;
-app.use(express.json()) ;
-
-app.get("/",(req,res)=>{
-    res.send("Server is Running") ;
+mongo.connect('mongodb://localhost:27017/authentication')
+.then(()=>{
+  console.log("Mongo Db is Connected")
+}).catch((err)=>{
+   console.log('Connection error') ;
 })
 
-app.listen('3000')
+app.get('/', (req, res) => {
+  res.send('I am running')
+})
 
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
